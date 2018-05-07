@@ -27,6 +27,38 @@ let g:syntastic_enable_highlighting = 1
 let g:syntastic_auto_jump = 1
 let g:syntastic_auto_loc_list = 1
 
+let g:easytags_cmd = '$HOME/.brew/bin/ctags'
+let g:easytags_opts = ['--options=$VIM\ctags\ctags.cnf']
+let g:easytags_syntax_keyword = 'always'
+let g:easytags_languages = {
+\   'language': {
+\     'cmd': g:easytags_cmd,
+\	    'args': [],
+\	    'fileoutput_opt': '-f',
+\	    'stdout_opt': '-f-',
+\	    'recurse_flag': '-R'
+\   }
+\}
+let g:easytags_file = '$HOME/.vim/tags'
+set tags=./tags;
+let g:easytags_dynamic_files = 1
+let g:easytags_events = ['BufWritePost']
+let g:easytags_always_enabled = 1
+let g:easytags_on_cursorhold = 0
+let g:easytags_auto_update = 1
+let g:easytags_auto_highlight = 1
+let g:easytags_autorecurse = 1
+let g:easytags_include_members = 1
+let g:easytags_resolve_links = 1
+let g:easytags_suppress_ctags_warning = 0
+let g:easytags_suppress_report = 0
+, , , , 
+highlight link ccTypeTa Special
+highlight link cEnumTag Special
+highlight link cPreProcTag Special
+highlight link ScMember  pecial
+highlight link ccMemberTa Special
+
 call pathogen#infect()
 call pathogen#helptags()
 colorscheme gruvbox
