@@ -50,12 +50,22 @@ let mapleader=","
 inoremap jj         <esc>
 noremap <S-Tab>    :tabprevious<CR>
 noremap <Tab>      :tabnext<CR>
+
+"move between window
 noremap <S-l>       <C-w><Right>
 noremap <S-h>       <C-w><Left>
 noremap <S-k>       <C-w><Up>
 noremap <S-j>       <C-w><Down>
-noremap +   :vertical resize +3<CR>
-noremap -   :vertical resize -3<CR>
+
+"resize window
+noremap <C-l>   :vertical resize +3<CR>
+noremap <C-h>   :vertical resize -3<CR>
+noremap <C-j>   <C-w>-
+noremap <C-k>   <C-w>+
+
+"search selection
+vnoremap //     y/<C-R>"<CR>
+
 nmap <leader>l :set list!<CR>
 nmap <leader>k :set nolist!<CR>
 nmap <leader>f :vimgrep
@@ -73,6 +83,7 @@ nnoremap <Leader>f :Files<CR>
 nnoremap <Tab> :tabnext<Return>
 nnoremap <Shift><Tab> :tabprevious<Return>
 inoremap <Tab>   
+:tnoremap <Esc> <C-\><C-n>
 
 " Don't be a noob, join the no arrows key movement
 inoremap  <Up>     <NOP>
