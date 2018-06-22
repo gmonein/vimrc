@@ -1,6 +1,6 @@
 set nocompatible " be iMproved
 set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call vundle#begin("~/.config/nvim/bundle")
 set tags=./tags; " Set tags directory
 
 au BufNewFile,BufRead *.todo set filetype=todo
@@ -8,6 +8,7 @@ au BufNewFile,BufRead *.todo set filetype=todo
 
 let sbv_open_nerdtree_to_start=0
 let sbv_open_nerdtree_with_new_tab=0
+Plugin 'jlanzarotta/bufexplorer'
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
@@ -17,6 +18,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-haml'
 Plugin 'w0rp/ale'
 Plugin 'scrooloose/nerdtree'
 Plugin 'vim-airline/vim-airline'
@@ -27,7 +29,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'mileszs/ack.vim'
 Plugin 'junegunn/fzf.vim'
 "Plugin 'elixir-editors/vim-elixir'
-Plugin 'huffman/vim-elixir'
+"Plugin 'huffman/vim-elixir'
 Plugin 'slashmili/alchemist.vim'
 Plugin 'c-brenn/phoenix.vim'
 Plugin 'tpope/vim-projectionist'
@@ -35,31 +37,37 @@ Plugin 'morhetz/gruvbox'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-surround'
 Plugin 'jiangmiao/auto-pairs'
-
+Plugin 'Shougo/deoplete.nvim'
 
 call vundle#end()
-filetype plugin indent on 
-
 colorscheme gruvbox
 set background=dark
-
+let g:deoplete#enable_at_startup = 1
 syntax on
 let g:solarized_termcolors=256
 highlight NonText ctermfg=1
 highlight SpecialKey ctermfg=10 guifg=#80a0ff
 let mapleader=","
 
+inoremap jj         <esc>
 noremap <S-Tab>    :tabprevious<CR>
 noremap <Tab>      :tabnext<CR>
-inoremap j        <Esc>
-vnoremap ,        <Esc>
 
+"move between window
 noremap <S-l>       <C-w><Right>
 noremap <S-h>       <C-w><Left>
 noremap <S-k>       <C-w><Up>
 noremap <S-j>       <C-w><Down>
-noremap +   :vertical resize +3<CR>
-noremap -   :vertical resize -3<CR>
+
+"resize window
+noremap <C-l>   :vertical resize +3<CR>
+noremap <C-h>   :vertical resize -3<CR>
+noremap <C-j>   <C-w>-
+noremap <C-k>   <C-w>+
+
+"search selection
+vnoremap //     y/<C-R>"<CR>
+
 nmap <leader>l :set list!<CR>
 nmap <leader>k :set nolist!<CR>
 nmap <leader>f :vimgrep
@@ -76,9 +84,8 @@ nnoremap <Leader>a :Ack!<Space>
 nnoremap <Leader>f :Files<CR>
 nnoremap <Tab> :tabnext<Return>
 nnoremap <Shift><Tab> :tabprevious<Return>
-ino jj <esc>
-cno jj <c-c>
-vno v <esc>
+inoremap <Tab>   
+tnoremap <Esc> <C-\><C-n>
 
 " Don't be a noob, join the no arrows key movement
 inoremap  <Up>     <NOP>
@@ -89,7 +96,6 @@ noremap   <Up>     <NOP>
 noremap   <Down>   <NOP>
 noremap   <Left>   <NOP>
 noremap   <Right>  <NOP>
-set autoindent
 set incsearch
 set splitright
 set splitbelow
@@ -102,15 +108,12 @@ set cursorline
 set noswapfile
 set number
 set backspace=2
-set tabstop=2
 set expandtab
+set tabstop=2
 
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
-
-command Sp set paste
-command Np set nopaste
 
 autocmd VimEnter * set list lcs=tab:·\
 autocmd VimEnter * set list lcs=tab:·\
@@ -180,3 +183,13 @@ if exists("+undofile")
 	set undodir+=~/.vim/undo//
 	set undofile
 endif
+
+autocmd BufNewFile,BufRead *.ruby set shiftwidth=2
+autocmd BufNewFile,BufRead *.ruby set tabstop=2
+autocmd BufNewFile,BufRead *.ruby set softtabstop=2
+autocmd BufNewFile,BufRead *.rb set shiftwidth=2
+autocmd BufNewFile,BufRead *.rb set tabstop=2
+autocmd BufNewFile,BufRead *.rb set softtabstop=2
+autocmd BufNewFile,BufRead *.haml set shiftwidth=2
+autocmd BufNewFile,BufRead *.haml set tabstop=2
+autocmd BufNewFile,BufRead *.haml set softtabstop=2
