@@ -53,7 +53,7 @@ let mapleader=","
 
 tnoremap <leader>pls  ls -d ${PWD}/*<CR>
 tnoremap <leader>1pls ls -1 -d ${PWD}/*<CR>
-nnoremap <leader>pvrc  :! sh ~/vimrc/push_vimrc.sh
+nnoremap <leader>pvrc  :! sh ~/vimrc/push_vimrc.sh<CR>
 nnoremap <C-s>         :w<CR>
 nnoremap <S-Tab>       :tabprevious<CR>
 noremap <Tab>         :tabnext<CR>
