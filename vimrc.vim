@@ -51,11 +51,11 @@ let g:airline#extensions#ale#enabled = 1
 let g:fzf_action = { 'T': 'tab split', 'S': 'split', 'V': 'vsplit'}
 let mapleader=","
 
-tnoremap pls          ls -d ${PWD}/*<CR>
-tnoremap 1pls         ls -1 -d ${PWD}/*<CR>
-noremap pmvrc         :! sh ~/vimrc/push_vimrc.sh
-noremap <C-s>         :w<CR>
-noremap <S-Tab>       :tabprevious<CR>
+tnoremap <leader>pls  ls -d ${PWD}/*<CR>
+tnoremap <leader>1pls ls -1 -d ${PWD}/*<CR>
+nnoremap <leader>pvrc  :! sh ~/vimrc/push_vimrc.sh
+nnoremap <C-s>         :w<CR>
+nnoremap <S-Tab>       :tabprevious<CR>
 noremap <Tab>         :tabnext<CR>
 noremap <S-l>         <C-w><Right>
 noremap <S-h>         <C-w><Left>
