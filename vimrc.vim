@@ -51,11 +51,9 @@ let g:airline#extensions#ale#enabled = 1
 let g:fzf_action = { 'T': 'tab split', 'S': 'split', 'V': 'vsplit'}
 let mapleader=","
 
-tnoremap <leader>pls  ls -d ${PWD}/*<CR>
-tnoremap <leader>1pls ls -1 -d ${PWD}/*<CR>
-nnoremap <leader>pvrc  :! sh ~/vimrc/push_vimrc.sh<CR>
-nnoremap <C-s>         :w<CR>
-nnoremap <S-Tab>       :tabprevious<CR>
+" nmap <leader>gv       :exe "normal V" | let temp_var=indent(line(".")) | while indent(line(".")+1) >= temp_var | exe "normal j" | endwhile
+nnoremap <C-s>        :w<CR>
+nnoremap <S-Tab>      :tabprevious<CR>
 noremap <Tab>         :tabnext<CR>
 noremap <S-l>         <C-w><Right>
 noremap <S-h>         <C-w><Left>
@@ -67,12 +65,20 @@ noremap <C-j>         <C-w>-
 noremap <C-k>         <C-w>+
 nnoremap <Tab>        :tabnext<CR>
 nnoremap <Shift><Tab> :tabprevious<CR>
+tmap <C-h>            <Left>
+tmap <C-j>            <Down>
+tmap <C-k>            <Up>
+tmap <C-l>            <Right>
+tmap <leader>eo       <C-c>reload!<CR>
+nmap <leader>eo       :te<CR>irails c<CR><esc>
+tmap <leader>ei       <C-c>reload!<CR><Up><Up><CR>
+nmap <leader>ei       :te<CR>irails c<CR><Up><CR>
 tmap <Esc>            <C-\><C-n>
-tmap :q               <Esc>:q<CR>
+map <leader>/         <Esc>:noh<CR>
 map <leader>T         :sp<CR>:te<CR>
 map <leader>t         :bot new<CR>:te<CR>
-map <leader>C         <leader>tirails c<CR>
-map <leader>c         <leader>Tirails c<CR>
+map <leader>C         <leader>Tirails c<CR>
+map <leader>c         <leader>tirails c<CR>
 nnoremap <leader>vrc  :tabnew ~/.config/nvim/init.vim<CR>
 nmap <leader>rr       :te<CR>irails routes<CR>
 nmap <leader>rb       :bot<CR>:te<CR>irails routes<CR>
@@ -102,20 +108,30 @@ nmap <leader>oi       :e app/controllers<CR>
 nnoremap <leader>o    :vsp app/controllers<CR>
 nnoremap <leader>O    :sp app/controllers<CR>
 nnoremap <leader>ot   :tabnew app/controllers<CR>
+nmap <leader>dmi      :e db/migrate<CR>
+nnoremap <leader>dm   :vsp db/migrate<CR>
+nnoremap <leader>Dmi  :sp db/migrate<CR>
+nnoremap <leader>dmt  :tabnew db/migrate<CR>
 vnoremap //           y/<C-R>"<CR>
+tnoremap <leader>pls  ls -d ${PWD}/*<CR>
+tnoremap <leader>1pls ls -1 -d ${PWD}/*<CR>
+nnoremap <leader>pvrc  :! sh ~/vimrc/push_vimrc.sh<CR>
 
 inoremap jj           <esc>
 inoremap jk           <esc>
 inoremap kj           <esc>
+tnoremap jj           <esc>
+tnoremap jk           <esc>
+tnoremap kj           <esc>
 " Don't be a noob, join the no arrows key movement
-inoremap <Up>       <NOP>
-inoremap <Down>     <NOP>
-inoremap <Left>     <NOP>
-inoremap <Right>    <NOP>
-noremap <Up>        <NOP>
-noremap <Down>      <NOP>
-noremap <Left>      <NOP>
-noremap <Right>     <NOP>
+" inoremap <Up>       <NOP>
+" inoremap <Down>     <NOP>
+" inoremap <Left>     <NOP>
+" inoremap <Right>    <NOP>
+" noremap <Up>        <NOP>
+" noremap <Down>      <NOP>
+" noremap <Left>      <NOP>
+" noremap <Right>     <NOP>
 inoremap <expr><C-j> pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr><C-k> pumvisible() ? "\<C-p>" : "\<Up>"
 inoremap <expr><C-l> pumvisible() ? "\<C-y>" : "\<C-l>"
@@ -188,11 +204,37 @@ autocmd BufNewFile,BufRead *.rb set tabstop=2
 autocmd BufNewFile,BufRead *.haml set shiftwidth=2
 autocmd BufNewFile,BufRead *.haml set tabstop=2
 autocmd BufNewFile,BufRead *.haml set softtabstop=2
+autocmd BufNewFile,BufRead *.scss set shiftwidth=2
+autocmd BufNewFile,BufRead *.scss set tabstop=2
+autocmd BufNewFile,BufRead *.scss set softtabstop=2
 autocmd BufNewFile,BufRead *.coffee set syntax=coffee
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" set autocompletion when CTRL-P or CTRL-N are used.
+" It is also used for whole-line
+" . ... scan the current buffer
+" b ... scan other loaded buffers that are in the buffer list
+" w ... buffers from other windows
+" u ... scan unloaded buffers that are in the buffer list
+" U ... scan buffers that are not in the buffer list
+" ] ... tag completion
+" i ... scan current and included files
+set complete=i,.,b,w,u,U,]
+
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+if !exists('g:neocomplete#sources#omni#input_patterns')
+ let g:neocomplete#sources#omni#input_patterns = {}
+endif
+if !exists('g:neocomplete#force_omni_input_patterns')
+ let g:neocomplete#force_omni_input_patterns = {}
+endif
+
 """""""""""""""""""""""""""""""""""                    Fuzzy finder!                   """""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 let g:fzf_layout = { 'left': '~20%' }
 let g:rg_command = '
