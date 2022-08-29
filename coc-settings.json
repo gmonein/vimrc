@@ -31,5 +31,9 @@
   },
   "diagnostic-languageserver.filetypes": {
     "ruby": "rubocop"
-  }
+  },
+  "tsserver.formatOnType": true,
+  "eslint.packageManager": "yarn",
+  "typescript.suggest.autoImports": true,
+  "typescript.format.enabled": true
 }
