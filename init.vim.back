@@ -1,0 +1,237 @@
+set tags=./tags; " Set tags directory
+execute "set t_8f=\e[38;2;%lu;%lu;%lum"
+execute "set t_8b=\e[48;2;%lu;%lu;%lum"
+
+let mapleader=","
+function! MyPlugin(...)
+  let builder = a:1
+
+  call builder.add_section('Normal', '%f')
+  return 1
+endfunction
+
+call airline#add_statusline_func('MyPlugin')
+
+function AirlineInit()
+  let g:airline_section_a = airline#section#create(['mode', ' ', 'branch', 'blame'])
+endfunction
+
+autocmd VimEnter * call AirlineInit()
+
+" set filetypes as typescriptreact
+autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
+
+" nmap <leader>gv       :exe "normal V" | let temp_var=indent(line(".")) | while indent(line(".")+1) >= temp_var | exe "normal j" | endwhile
+nnoremap <S-Tab>      :tabprevious<CR>
+noremap <Tab>         :tabnext<CR>
+noremap <C-l>         :vertical resize +3<CR>
+noremap <C-h>         :vertical resize -3<CR>
+noremap <C-j>         <C-w>-
+noremap <C-k>         <C-w>+
+tmap <C-h>            <Left>
+tmap <C-j>            <Down>
+tmap <C-k>            <Up>
+tmap <C-l>            <Right>
+tmap <Esc>            <C-\><C-n>
+map <leader>/         <Esc>:noh<CR>
+nnoremap <leader>vrc  :tabnew ~/.config/nvim/init.vim<CR>
+map <leader>"'        cs"'
+map <leader>'"        cs'"
+nnoremap <Leader>f    :Files<CR>
+nnoremap <Leader>b    :Buffers<CR>
+nnoremap <leader>l    :BLines<CR>
+vnoremap //           y/<C-R>"<CR>
+
+inoremap jj           <esc>
+inoremap jk           <esc>
+inoremap kj           <esc>
+tnoremap jj           <esc>
+tnoremap jk           <esc>
+tnoremap kj           <esc>
+inoremap fj           <esc>
+inoremap jf           <esc>
+command! W w
+
+inoremap <silent><expr> <c-u> coc#refresh()
+inoremap <expr> <C-CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-l>"
+inoremap <expr> <C-j> coc#pum#visible() ? coc#pum#next(1) : "\<C-j>"
+inoremap <expr> <C-k> coc#pum#visible() ? coc#pum#prev(1) : "\<C-k>"
+
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+xmap <leader>=  <Plug>(coc-format-selected)
+nmap <leader>=  <Plug>(coc-format-selected)
+nmap <silent> <Leader>j <Plug>(coc-diagnostic-next-error)
+nmap <silent> <Leader>k <Plug>(coc-diagnostic-prev-error)
+nmap <silent> <Leader>w <Plug>(coc-diagnostic-next-warning)
+
+nnoremap <expr><silent> K coc#float#has_float() ? "<Plug>(coc-float-jump)" : ":call CocActionAsync('doHover')<CR>"
+
+augroup mygroup
+  autocmd!
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+let sbv_open_nerdtree_to_start=0
+let sbv_open_nerdtree_with_new_tab=0
+
+set shell=zsh
+set incsearch
+set splitright
+set splitbelow
+set ignorecase
+set smartcase
+set splitright
+set splitbelow
+set hlsearch
+set cursorline
+set noswapfile
+set number
+set backspace=2
+set expandtab
+set tabstop=2
+set shiftwidth=2
+set modifiable
+set clipboard=unnamedplus
+set termguicolors
+
+colorscheme gruvbox
+set background=dark
+let g:gruvbox_contrast_dark='hard'
+
+syntax on
+highlight NonText ctermfg=1
+highlight SpecialKey ctermfg=10 guifg=#80a0ff
+
+let test#strategy = "neovim"
+
+nmap <leader>sn :Snek<CR>
+nmap <leader>cm :Camel<CR>
+nmap <leader>cb :CamelB<CR>
+nmap <leader>kb :Kebab<CR>
+
+if isdirectory($HOME . '/.vim/backup') == 0
+  :silent !mkdir -p ~/.vim/backup >/dev/null 2>&1
+endif
+
+set backupdir^=~/.vim/backup/
+set backup
+
+if isdirectory($HOME . '/.vim/swap') == 0
+  :silent !mkdir -p ~/.vim/swap >/dev/null 2>&1
+endif
+set directory+=~/.vim/swap//
+if isdirectory($HOME . '/.vim/undo') == 0
+  :silent !mkdir -p ~/.vim/undo > /dev/null 2>&1
+endif
+set undodir=./.vim-undo//
+set undodir+=~/.vim/undo//
+set undofile
+
+noremap <leader>sb   :let saved_buffer_nr = bufnr('%')<CR>
+noremap <leader>ob   :exec 'b' saved_buffer_nr<CR>
+
+map <Leader>rc :call RunCurrentSpecFile()<CR>
+map <Leader>rl :call RunNearestSpec()<CR>
+map <Leader>rr :call RunLastSpec()<CR>
+
+"Open current buffer directory
+nnoremap <C-q> <C-\><C-n>:e <C-r>=fnameescape(expand('%:p:h'))<CR>
+
+noremap <leader><leader> <leader>
+
+autocmd! BufLeave *#FZF :bd!
+
+let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.9 } }
+let g:rg_command = '
+                        \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
+                        \ -g "*.{js,json,php,md,styl,pug,jade,html,config,py,cpp,c,go,hs,rb,conf,fa,lst}"
+                        \ -g "!{.config,.git,node_modules,vendor,build,yarn.lock,*.sty,*.bst,*.coffee,dist}/*" '
+inoremap <silent><expr> <Nul> coc#refresh()
+nmap <leader>appfront :ter<CR>icd ~/mjg/AppFrontEnd<CR>yarn start-js<CR><ESC>:f appfront_ter<CR>:sp<CR>:ter<CR>icd ~/mjg/AppFrontEnd; yarn generate-types<CR><ESC>:f appfront_types_ter<CR><ESC>
+nmap <leader>account  :ter<CR>icd ~/mjg/AccountFrontEnd ; yarn dev<CR><ESC>:f account_ter<CR>
+nmap <leader>school  :ter<CR>icd ~/mjg/SelfServiceFrontEnd ; yarn dev<CR><ESC>:f school_ter<CR>
+nmap <leader>hermes   :ter<CR>icd ~/mjg/Hermes ; bundle exec rails s<CR><ESC>:f hermes_ter<CR>
+nmap <leader>backend  :ter<CR>icd ~/mjg/Backend-API ; bundle exec rails s<CR><ESC>:f backend_ter<CR>
+nmap <leader>cpul :ter<CR>isudo cpulimit firefox -l 30<CR>
+nmap <leader>ruuun :tabnew<CR>,appfront:sp<CR>,account:sp<CR>,hermes:sp<CR>,backend
+
+nmap <leader>r :CocCommand tsserver.restart<CR>
+
+nmap <leader>rbf :call RubocopFixFile()<CR>
+
+nmap vib 0vwh"byV/^<C-R>bend<CR>
+
+let g:coc_filetype_map = {
+  \ 'rspec.ruby': 'ruby',
+  \ }
+
+function! RubocopFixFile()
+  exec('!rubocop --autocorrect --disable-uncorrectable ' . @%)
+endfunction
+
+function! GitBlameLine()
+  let g:line = line('.')
+  let g:file = @%
+  let g:blame = silent execute('!sh -c "git log -1 -L' . g:line . ',' . g:line . ':' . g:file . ' -s | grep -Eo \"Author: ([^<]*)\" | sed \"s/Author: //g\""')
+  echo g:blame
+endfunction
+
+function! RunRspecLine()
+  let g:specPath=@% . ':' . line('.')
+  call RunSpecPath()
+endfunction
+
+function! KubeCopy()
+  let g:path=@%
+  sp
+  exec("ter ~/bin/hermes_cp_test " . g:path)
+endfunction
+nnoremap <leader>hcp :call KubeCopy()<CR>
+
+function! RunSpecPath()
+  sp
+  " exec('ter bundle exec rspec --fail-fast ' . g:specPath)
+  exec('ter bundle exec rspec ' . g:specPath)
+endfunction
+
+nmap <leader>rf :call RunRspecFile()<CR>
+nmap <leader>rl :call RunRspecLine()<CR>
+nmap <leader>rr :call RunSpecPath()<CR>
+
+function! KillAll()
+  bufdo if (stridx(@%, '_ter') == -1) | bd! | endif
+endfunction
+
+function! SearchAndReplaceRg(pattern, replace)
+  let files = systemlist('rg -nl "' . a:pattern . '"')
+  arg files
+  exec('argdo %s/' . a:pattern . '/' . a:replace . '/gce | update')
+endfunction
+
+nmap <leader>rg :sp<CR>:ter<CR>irg '<ESC>pi'<CR><ESC>
+nmap <leader>cm :!connect_mouse<CR>
+
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX) && getenv('TERM_PROGRAM') != 'Apple_Terminal')
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+  endif
+endif
+
+function! M(move)
+endfunc
+
+nmap ,, j:sleep 10ms<CR>j:sleep 10ms<CR>h:sleep 10ms<CR>h:sleep 10ms<CR>h:sleep 10ms<CR>h:sleep 10ms<CR>k:sleep 10ms<CR>k:sleep 10ms<CR>l:sleep 10ms<CR>l:sleep 10ms<CR>l:sleep 10ms<CR>l:sleep 10ms<CR>

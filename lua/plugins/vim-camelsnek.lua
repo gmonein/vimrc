@@ -1,0 +1,3 @@
+return {{
+  "nicwest/vim-camelsnek"
+}}

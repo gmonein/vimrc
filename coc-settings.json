@@ -1,0 +1,12 @@
+{
+  "eslint.enable": true,
+  "eslint.nodePath": "~/.asdf/shims/node",
+  "eslint.autoFixOnSave": true,
+  "eslint.format.enable": false,
+  "eslint.packageManager": "yarn",
+  "solargraph.diagnostics": true,
+  "solargraph.useBundler": true,
+  "tsserver.tsconfigPath": "~/mjg/AppFrontEnd/tsconfig.json",
+  "javascript.suggest.autoImports": true, 
+  "typescript.suggest.autoImports": true
+}
