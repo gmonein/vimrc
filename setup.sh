@@ -1,0 +1,3 @@
+#!sh
+
+echo 'Hello, world!'

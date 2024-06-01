@@ -1,0 +1,5 @@
+local socket = vim.api.nvim_exec("echo serverstart('nvim.sasock')", true)
+home=os.getenv( "HOME" )
+file = io.open(home .. "/.config/nvim/.nvim.sock", "w+")
+file:write(socket)
+file:close()

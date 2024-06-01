@@ -1,0 +1,13 @@
+-- local query = require'vim.treesitter.query'
+-- local cquery = query.get('ruby', 'heredoc')
+--
+-- for pattern, match, metadata in cquery:iter_matches(tree:root(), bufnr, 0, -1, { all = true }) do
+--  for id, nodes in pairs(match) do
+--     local name = query.captures[id]
+--     for _, node in ipairs(nodes) do
+--       -- `node` was captured by the `name` capture in the match
+--       local node_data = metadata[id] -- Node level metadata
+--       -- Use the info here to implement custom linting and completion logic
+--     end
+--  end
+-- end
