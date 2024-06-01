@@ -1,6 +1,7 @@
-local function reloadConfigWithPath()
-    local currentBufferPath = vim.fn.expand('%:p')
-    ReloadConfig(currentBufferPath)
+function _G.reloadAndRunLua()
+    if vim.bo.filetype == 'lua' then
+        require('plenary.reload').reload_module('%')
+        vim.cmd('luafile %')
+    end
 end
-
-vim.api.nvim_set_keymap('n', '<leader>rc', '<cmd>lua reloadConfigWithPath()<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>rl', '<cmd>lua reloadAndRunLua()<CR>', { noremap = true, silent = true })
