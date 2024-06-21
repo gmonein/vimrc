@@ -18,7 +18,6 @@ return {{
         "graphql",
         "css",
         "scss",
-        "angular"
       },
     })
   end

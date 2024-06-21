@@ -1,32 +1,38 @@
 return {{
   "neovim/nvim-lspconfig",
-  dependencies = { "hrsh7th/nvim-cmp", "hrsh7th/cmp-nvim-lsp", "williamboman/mason.nvim", "williamboman/mason-lspconfig.nvim" },
+  dependencies = {
+    'williamboman/mason.nvim',
+    'williamboman/mason-lspconfig.nvim',
+    "hrsh7th/nvim-cmp",
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-path',
+    'hrsh7th/cmp-cmdline',
+    'hrsh7th/vim-vsnip',
+    'hrsh7th/cmp-vsnip'
+  },
   config = function()
-    local servers = { "tsserver", "graphql", "jsonls", "prismals", "solargraph" }
+    local servers = 
 
     require("mason").setup()
     require("mason-lspconfig").setup({
-      ensure_installed = servers
+      ensure_installed = { "tsserver", "prismals", "solargraph" }
     })
-    local lspconfig = require("lspconfig")
-    local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-    for _, lsp in ipairs(servers) do
-      lspconfig[lsp].setup({
-        capabilities = capabilities
-      })
-    end
+    require("lspconfig")['tsserver'].setup {
+      on_attach = function(client, bufnr)
+        local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+        buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+      end,
+      filetypes = { "typescript", "typescriptreact", "typescript.tsx" }
+    }
 
     vim.keymap.set('n', '<leader>k', vim.diagnostic.goto_prev)
     vim.keymap.set('n', '<leader>j', vim.diagnostic.goto_next)
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('UserLspConfig', {}),
       callback = function(ev)
-        -- Enable completion triggered by <c-x><c-o>
         vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-
-        -- Buffer local mappings.
-        -- See `:help vim.lsp.*` for documentation on any of the below functions
         local opts = { buffer = ev.buf }
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
         vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
@@ -37,7 +43,7 @@ return {{
       end,
     })
 
-    local cmp = require 'cmp'
+    local cmp = require('cmp')
     cmp.setup {
       snippet = {
         expand = function(args)
@@ -45,6 +51,9 @@ return {{
         end,
       },
       mapping = cmp.mapping.preset.insert({
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp. mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-y>'] = cmp.mapping.confirm {
           behavior = cmp.ConfirmBehavior.Replace,
@@ -73,7 +82,9 @@ return {{
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = "dotenv" },
-      }, { { name = 'buffer' } },
+        { name = 'vsnip' },
+        { name = 'buffer' }
+      }
     }
   end
 }}
