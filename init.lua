@@ -1,7 +1,7 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 vim.g.mapleader = ","
-
+vim.g.ruby_host_prog = 'asdf exec neovim-ruby-host'
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
     "git",
