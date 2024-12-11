@@ -6,7 +6,7 @@ return {{
     { 'L3MON4D3/LuaSnip', run = "make install_jsregexp" },
     "hrsh7th/nvim-cmp",
     'hrsh7th/cmp-nvim-lsp',
-    'SergioRibera/cmp-dotenv',
+    -- 'SergioRibera/cmp-dotenv',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
     'FelipeLema/cmp-async-path',
@@ -35,7 +35,31 @@ return {{
     })
     lspconfig.rubocop.setup({
       root_dir = lspconfig.util.root_pattern("Gemfile", ".git");
-      cmd = { 'bundle', 'exec', 'rubocop', '--lsp' },
+      cmd = { 'rubocop', '--lsp' },
+    })
+    lspconfig.eslint.setup({
+      cmd = { "vscode-eslint-language-server", "--stdio" },
+      filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "vue", "svelte", "astro" },
+      {
+        codeAction = {
+          disableRuleComment = { enable = true, location = "separateLine" },
+          showDocumentation = { enable = true }
+        },
+        codeActionOnSave = { enable = true, mode = "all" },
+        experimental = { useFlatConfig = false },
+        format = false,
+        nodePath = "",
+        onIgnoredFiles = "off",
+        problems = { shortenToSingleLine = false },
+        quiet = false,
+        rulesCustomizations = {},
+        run = "onType",
+        useESLintClass = false,
+        validate = "on",
+        workingDirectory = {
+          mode = "location"
+        }
+      }
     })
 
     vim.keymap.set('n', '<leader>k', vim.diagnostic.goto_prev)

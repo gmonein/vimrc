@@ -24,3 +24,5 @@ gem update --system 3.5.14
 gem install ruby-lsp-rubyfmt
 gem install ruby-lsp-rspec
 gem install neovim
+
+yarn global add prettier

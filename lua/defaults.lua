@@ -24,10 +24,9 @@ vim.opt.modifiable = true
 vim.opt.number = true
 
 vim.opt.undofile = true
-vim.opt.undodir = ".vim-undo/"
+vim.opt.undodir = "$HOME/.vim-undo/"
 
 vim.opt.dir = "/tmp/"
 
 vim.opt.backup = true
 vim.opt.backupdir = '.vim-backup/'
-
