@@ -25,7 +25,7 @@ return {{
     lspconfig.lua_ls.setup { capabilities = capabilities }
     lspconfig.solargraph.setup({
       root_dir = lspconfig.util.root_pattern("Gemfile", ".git");
-      cmd = { 'bundle', 'exec', 'solargraph', 'stdio' },
+      cmd = { 'solargraph', 'stdio' },
       settings = {
         solargraph = {
           diagnostics = false,

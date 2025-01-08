@@ -30,5 +30,7 @@ vim.keymap.set('n', '<leader>sg', ':sp | ter cd ~/mjg/AppFrontEnd/ && yarn gener
 vim.keymap.set('n', '<leader>sr', ':sp /Users/gaelmonein/mjg/AppFrontEnd/src/@types/graphql.d.ts<CR>:e! %<CR>:bd!<CR>')
 vim.keymap.set('n', '<leader>gem', ':tabnew /Users/gaelmonein/.asdf/installs/ruby/2.7.2/lib/ruby/gems/2.7.0/gems/')
 
+vim.keymap.set('n', '<C-p', '<C-i>', { noremap = true, silent = true })
+
 vim.cmd("command! W w")
 vim.filetype.add({ extension = { arb = "ruby" } })

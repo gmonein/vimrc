@@ -24,7 +24,7 @@ vim.opt.modifiable = true
 vim.opt.number = true
 
 vim.opt.undofile = true
-vim.opt.undodir = "$HOME/.vim-undo/"
+vim.opt.undodir = vim.fn.expand('~') .. "/.vim-undo/"
 
 vim.opt.dir = "/tmp/"
 
