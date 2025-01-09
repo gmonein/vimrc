@@ -24,7 +24,6 @@ require("lazy").setup({
   }
 })
 
-require("keymaps")
 require("ruby-heredoc")
 require("ruby-runspec")
 require("ruby-gemwhich")
@@ -33,3 +32,4 @@ require("reload-lua")
 require("open-current-buffer-folder")
 require("run-applications")
 require("vim-go")
+require("ruby-lsp")
