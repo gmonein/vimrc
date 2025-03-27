@@ -8,6 +8,8 @@ return {{
   config = function()
     local action_layout = require("telescope.actions.layout")
     local actions = require("telescope.actions")
+    local additional_rg_args = { "--hidden", "--glob", "!**/.git/*", "--glob", "!**/node_modules/*" }
+
     require("telescope").setup({
       defaults = {
         mappings = {
@@ -26,7 +28,9 @@ return {{
               ["<c-d>"] = actions.delete_buffer + actions.move_to_top,
             }
           }
-        }
+        },
+        live_grep = { additional_args = additional_rg_args },
+        grep_string = { additional_args = additional_rg_args },
       },
       extensions = {
         fzf = {
@@ -51,7 +55,7 @@ return {{
     end
 
     vim.keymap.set('n', '<leader>f', telescope.find_files, {})
-    vim.keymap.set('n', '<leader>g', telescope.live_grep, {})
+    vim.keymap.set('n', '<leader>l', telescope.live_grep, {})
     vim.keymap.set('n', '<leader>b', telescope.buffers, {})
     vim.keymap.set("n", "<leader>tf", ":lua search_current_folder()<CR>", { noremap = true, silent = true })
   end

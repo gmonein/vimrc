@@ -1,3 +1,11 @@
+vim.diagnostic.config({
+  virtual_text = true,   -- Affiche le texte du diagnostic directement dans le buffer
+  signs = true,          -- Conserve les signes dans la colonne de gauche
+  underline = true,     -- Désactive le soulignement des lignes
+  update_in_insert = false, -- Ne met pas à jour les diagnostics en mode insert
+  severity_sort = true,  -- Trie les diagnostics par gravité
+})
+
 vim.opt.shell = "zsh"
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
@@ -64,6 +72,17 @@ vim.keymap.set('n', '<leader>sr', ':sp /Users/gaelmonein/mjg/AppFrontEnd/src/@ty
 vim.keymap.set('n', '<leader>gem', ':tabnew /Users/gaelmonein/.asdf/installs/ruby/2.7.2/lib/ruby/gems/2.7.0/gems/')
 
 vim.keymap.set('n', '<C-p', '<C-i>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>hf', '"pyyi<C-c>hvim <C-\\><C-n>"ppi<CR>')
 
 vim.cmd("command! W w")
 vim.filetype.add({ extension = { arb = "ruby" } })
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "eruby.javascript",
+  callback = function()
+    vim.opt.shiftwidth = 2
+    vim.opt.expandtab = true
+    vim.opt.tabstop = 2
+    vim.opt.softtabstop = 2
+  end,
+})

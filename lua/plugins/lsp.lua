@@ -24,7 +24,7 @@ return {{
       cmd = { 'rubocop', '--lsp' },
     })
     lspconfig.eslint.setup({
-      cmd = { "vscode-eslint-language-server", "--stdio" },
+      cmd = { "zsh", "-c", "asdf shell nodejs 16.20.2; vscode-eslint-language-server --stdio" },
       filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "vue", "svelte", "astro" },
       {
         codeAction = {
